@@ -14,12 +14,21 @@ class TagSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ProjectSerializer(serializers.ModelSerializer):
+class ProjectReadSerializer(serializers.ModelSerializer):
     tag = TagSerializer(read_only=True, many=True)
 
     class Meta:
         model = Project
         fields = ('id', 'slug', 'title', 'description', 'customer', 'main_image', 'image_1', 'image_2', 'image_3',
+                  'tag', 'num')
+
+
+class ProjectWriteSerializer(serializers.ModelSerializer):
+    tag = serializers.SlugRelatedField(queryset=Tag.objects.all, slug_field='slug', many=True)
+
+    class Meta:
+        model = Project
+        fields = ('id', 'slug_project', 'title', 'description', 'customer', 'main_image', 'image_1', 'image_2', 'image_3',
                   'tag', 'num')
 
 

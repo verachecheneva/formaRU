@@ -25,7 +25,7 @@ class Tag(models.Model):
 
 
 class Project(models.Model):
-    slug = models.SlugField(max_length=20, unique=True)
+    slug_project = models.SlugField(max_length=20, unique=True)
     title = models.CharField(max_length=100, verbose_name='Название проекта')
     description = models.TextField(verbose_name='Описание проекта', help_text='Полное описание проекта')
     customer = models.CharField(max_length=100, verbose_name='Заказчик')

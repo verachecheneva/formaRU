@@ -3,8 +3,8 @@ from rest_framework import viewsets, permissions, mixins, filters
 from django_filters.rest_framework import DjangoFilterBackend
 
 from content.models import Application, Project, Tag, Questions, CompanyData
-from .serializers import ApplicationSerializer, ProjectSerializer, TagSerializer, QuestionsSerializer, \
-    CompanyDataSerializer
+from .serializers import ApplicationSerializer, ProjectReadSerializer, ProjectWriteSerializer, \
+    TagSerializer, QuestionsSerializer, CompanyDataSerializer
 
 
 class ApplicationViewSet(viewsets.ModelViewSet):
@@ -23,9 +23,13 @@ class TagViewSet(viewsets.ModelViewSet):
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.order_by('num')
-    serializer_class = ProjectSerializer
     filter_backends = [DjangoFilterBackend]
     search_fields = ['title', 'description', 'customer', 'num']
+
+    def get_serializer_class(self):
+        if self.action in ('list', 'retrieve'):
+            return ProjectReadSerializer
+        return ProjectWriteSerializer
 
 
 class QuestionsViewSet(viewsets.ModelViewSet):
