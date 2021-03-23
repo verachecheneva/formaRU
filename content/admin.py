@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Application, Project, Tag, Questions, CompanyData
+from .models import Application, Project, Tag, Questions, CompanyData, ImageProject
 
 
 class CompanyDataAdmin(admin.ModelAdmin):
@@ -14,7 +14,13 @@ class ApplicationAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
 
+class ProjectImageInline(admin.TabularInline):
+    model = ImageProject
+    extra = 3
+
+
 class ProjectAdmin(admin.ModelAdmin):
+    inlines = [ProjectImageInline, ]
     list_display = ('num', 'title', 'description')
     search_fields = ('title', 'description')
     empty_value_display = '-пусто-'
@@ -29,6 +35,7 @@ class TagAdmin(admin.ModelAdmin):
 class QuestionsAdmin(admin.ModelAdmin):
     list_display = ('num', 'question')
     search_fields = ('num', 'question')
+    empty_value_display = '-пусто-'
 
 
 admin.site.register(CompanyData, CompanyDataAdmin)

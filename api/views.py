@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from rest_framework import viewsets, permissions, mixins, filters
 from django_filters.rest_framework import DjangoFilterBackend
+from django.shortcuts import get_object_or_404
 
-from content.models import Application, Project, Tag, Questions, CompanyData
-from .serializers import ApplicationSerializer, ProjectReadSerializer, ProjectWriteSerializer, \
-    TagSerializer, QuestionsSerializer, CompanyDataSerializer
+from content.models import Application, Project, Tag, Questions, CompanyData, ImageProject
+from .serializers import ApplicationSerializer, ProjectReadSerializer, TagSerializer, QuestionsSerializer, \
+    CompanyDataSerializer, ImageSerializer
 
 
 class ApplicationViewSet(viewsets.ModelViewSet):
@@ -23,13 +24,19 @@ class TagViewSet(viewsets.ModelViewSet):
 
 class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.order_by('num')
+    serializer_class = ProjectReadSerializer
     filter_backends = [DjangoFilterBackend]
     search_fields = ['title', 'description', 'customer', 'num']
 
-    def get_serializer_class(self):
-        if self.action in ('list', 'retrieve'):
-            return ProjectReadSerializer
-        return ProjectWriteSerializer
+
+class ImageViewSet(viewsets.ModelViewSet):
+    queryset = ImageProject.objects.all()
+    serializer_class = ImageSerializer
+    filter_backends = [DjangoFilterBackend]
+
+    def get_queryset(self):
+        project = get_object_or_404(Project, pk=self.kwargs.get('project_id'))
+        return ImageProject.objects.filter(project=project)
 
 
 class QuestionsViewSet(viewsets.ModelViewSet):

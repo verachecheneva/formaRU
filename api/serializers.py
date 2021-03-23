@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from content.models import Application, Project, Tag, Questions, CompanyData
+from content.models import Application, Project, Tag, Questions, CompanyData, ImageProject
 
 
 class ApplicationSerializer(serializers.ModelSerializer):
@@ -19,17 +19,13 @@ class ProjectReadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('id', 'slug', 'title', 'description', 'customer', 'main_image', 'image_1', 'image_2', 'image_3',
-                  'tag', 'num')
+        fields = ('id', 'slug_project', 'title', 'description', 'customer', 'main_image', 'tag', 'num')
 
 
-class ProjectWriteSerializer(serializers.ModelSerializer):
-    tag = serializers.SlugRelatedField(queryset=Tag.objects.all, slug_field='slug', many=True)
-
+class ImageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Project
-        fields = ('id', 'slug_project', 'title', 'description', 'customer', 'main_image', 'image_1', 'image_2', 'image_3',
-                  'tag', 'num')
+        model = ImageProject
+        fields = '__all__'
 
 
 class QuestionsSerializer(serializers.ModelSerializer):
@@ -41,4 +37,4 @@ class QuestionsSerializer(serializers.ModelSerializer):
 class CompanyDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompanyData
-        fields = '__all__'
+        fields = ('email', 'phone_number')

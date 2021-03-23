@@ -30,9 +30,6 @@ class Project(models.Model):
     description = models.TextField(verbose_name='Описание проекта', help_text='Полное описание проекта')
     customer = models.CharField(max_length=100, verbose_name='Заказчик')
     main_image = models.ImageField(upload_to='posts/', help_text='Первая картинка проекта', null=False)
-    image_1 = models.ImageField(upload_to='posts/', help_text='Первая картинка проекта', null=False, default=0)
-    image_2 = models.ImageField(upload_to='posts/', help_text='Вторая картинка проекта', null=False, default=0)
-    image_3 = models.ImageField(upload_to='posts/', help_text='Третья картинка проекта', null=False)
     tag = models.ManyToManyField(Tag, related_name='projects')
     num = models.IntegerField(unique=True, null=True, blank=True, help_text='Номер проекта на странице')
 
@@ -41,6 +38,11 @@ class Project(models.Model):
 
     class Meta:
         ordering = ('num', )
+
+
+class ImageProject(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='posts/', help_text='Другие картинки проекта',)
 
 
 class Questions(models.Model):
