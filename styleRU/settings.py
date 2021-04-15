@@ -29,7 +29,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
-    '161.35.212.254'
+    "localhost"
 ]
 
 
@@ -105,12 +105,14 @@ WSGI_APPLICATION = 'styleRU.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+import environ
+env = environ.Env()
+environ.Env.read_env()
+
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': env.db()
+
 }
 
 
