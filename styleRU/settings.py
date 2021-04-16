@@ -111,8 +111,14 @@ environ.Env.read_env()
 
 
 DATABASES = {
-    'default': env.db()
-
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('NAME'),
+        'USER': os.getenv('USER'),
+        'HOST': os.getenv('HOST'),
+        'PASSWORD': os.getenv('PASSWORD'),
+        'PORT': os.getenv('PORT'),
+    }
 }
 
 
