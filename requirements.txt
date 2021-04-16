@@ -13,6 +13,7 @@ defusedxml==0.7.0rc2
 Django==3.1.7
 django-cors-headers==3.7.0
 django-debug-toolbar==3.2
+django-environ==0.4.5
 django-filter==2.4.0
 django-phonenumber-field==5.0.0
 django-templated-mail==1.1.1
@@ -29,6 +30,8 @@ packaging==20.8
 phonenumbers==8.12.18
 Pillow==8.1.0
 pluggy==0.13.1
+psycopg2==2.8.6
+psycopg2-binary==2.8.6
 py==1.10.0
 pycparser==2.20
 PyJWT==2.0.1
